@@ -1,0 +1,21 @@
+dependencies:
+  pre:
+    - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc
+  override:
+    - cd languages/javascript && npm install
+    - cd languages/python && pip install -r requirements.txt
+  cache_directories:
+    - languages/javascript/node_modules
+
+test:
+  override:
+    - /bin/true
+  post:
+    - |
+      if [ "$CIRCLE_BRANCH" == "master" ]; then
+        echo "Trying to publish package, if it fails then this verison has already been published."
+        npm publish .
+      else
+        echo "Packages are only published to npm on branch 'master'."
+      fi
+      exit 0
