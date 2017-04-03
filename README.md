@@ -109,14 +109,25 @@ header `Authentication: Bearer {{token}}` is added to the request. There's no re
 override this manually though if you don't want to send a token in a specific request.
 
 And that's it! It's simple on purpose, and clientele's only job is to provide a nice wrapper around
-raw ajax calls. It makes no attempt to solve releated problems such as pagination.
+raw ajax calls. It makes no attempt to solve releated problems such as pagination. However, it's a
+good starting point.
 
-However, it's a good starting point. What's super interesting too is with a common format like this
-"generating" other api clients shouldn't be to big of a deal, so in the future, I envision:
+## The Future
+
+What's super interesting too is with a common format like this "generating" other api clients
+shouldn't be to big of a deal, so in the future, I envision:
+
 ```python
-
 import clientele
 api = clientele({ "resources": {...}, "variables": {} })
 response = api.some_thing.another_thing.get(id=1)
 print(response)
+```
+
+or:
+
+```ruby
+Api = Clientelle.new({ "resources": {...}, "variables": {} })
+response = Api::SomeThing::AnotherThing.get(:id => 1)
+puts response
 ```
