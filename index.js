@@ -1,7 +1,7 @@
-const wrapper = require('./wrapper');
+const clientele = require('./clientele');
 
-const core = wrapper(require('./specs/core-api'));
-const accounts = wrapper(require('./specs/accounts-api'));
+const core = clientele(require('./specs/core-api'));
+const accounts = clientele(require('./specs/accounts-api'));
 
 module.exports = {
   default: core,
