@@ -13,7 +13,12 @@ function template(data, config) {
     }
     return obj;
   } else {
-    return mustache.render(data.toString(), config);
+    const response = mustache.render(data.toString(), config);
+    if (response.length > 0) {
+      return response;
+    } else {
+      return undefined;
+    }
   }
 }
 
