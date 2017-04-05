@@ -10,5 +10,8 @@
   "dependencies": {
     "mustache": "^2.3.0",
     "qs": "^6.4.0"
+  },
+  "publishConfig": {
+    "registry": "http://npmregistry.density.rodeo"
   }
 }
