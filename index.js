@@ -58,6 +58,9 @@ module.exports = function make({resources, variables}) {
           // Make the query.
           return exec(resources[resource], combinedArgs);
         };
+
+        // Add the description to the fucntion. FIXME: is this weird?
+        library[resource].source = resources[resource];
       } else {
         // Just another node, decend further...
         library[resource] = recurseThroughResources(resources[resource], {});
@@ -68,12 +71,16 @@ module.exports = function make({resources, variables}) {
   }
 
   const library = {
-    // A predefined function
+    // A predefined function to adjust the configuration.
     config(config) {
-      for (const key in config) {
-        configuration[key] = config[key];
+      if (config) {
+        for (const key in config) {
+          configuration[key] = config[key];
+        }
+      } else {
+        return configuration;
       }
-    }
+    },
   };
 
   return recurseThroughResources(resources, library);
