@@ -5,7 +5,7 @@ const qs = require('qs');
 // contents in `config`
 function template(data, config) {
   if (Array.isArray(data)) {
-    return data.map(i => template(i, config));
+    return data.map(function(i) { return template(i, config); });
   } else if (data instanceof Object) {
     const obj = {};
     for (const i in data) {
@@ -37,11 +37,11 @@ function exec(data, variables) {
   }
 
   // Make the request.
-  return fetch(`${args.url}?${qs.stringify(args.qs || {})}`, args).then(resp => {
+  return fetch([args.url, qs.stringify(args.qs || {})].join('?'), args).then(resp => {
     if (resp.status >= 200 && resp.status < 300) {
       return resp.json();
     } else {
-      throw new Error(`Error ${resp.status} ${resp.statusText}: ${args.url} ${JSON.stringify(resp.body)}`);
+      throw new Error(['Error', resp.status, resp.statusText + ': ', args.url, JSON.stringify(resp.body)].join(' '));
     }
   });
 }
