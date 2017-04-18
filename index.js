@@ -48,9 +48,9 @@ function exec(data, variables) {
 
 
 
-module.exports = function make({resources, variables}) {
+module.exports = function make(options) {
   // Initially, our configuration starts with what was set in the config.
-  let configuration = variables;
+  var configuration = options.variables;
 
   // Traverse into a deeply-nested datastructure and convert leaf nodes into methods.
   function recurseThroughResources(resources, library) {
@@ -77,7 +77,7 @@ module.exports = function make({resources, variables}) {
 
   var library = {
     // A predefined function to adjust the configuration.
-    config(config) {
+    config: function(config) {
       if (config) {
         for (var key in config) {
           configuration[key] = config[key];
@@ -85,8 +85,8 @@ module.exports = function make({resources, variables}) {
       } else {
         return configuration;
       }
-    },
+    }
   };
 
-  return recurseThroughResources(resources, library);
+  return recurseThroughResources(options.resources, library);
 }
