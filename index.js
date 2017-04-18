@@ -1,5 +1,5 @@
-const mustache = require('mustache');
-const qs = require('qs');
+var mustache = require('mustache');
+var qs = require('qs');
 
 // Given a nested data structure with embedded mustache tags, replace all staches with their
 // contents in `config`
@@ -7,13 +7,13 @@ function template(data, config) {
   if (Array.isArray(data)) {
     return data.map(function(i) { return template(i, config); });
   } else if (data instanceof Object) {
-    const obj = {};
-    for (const i in data) {
+    var obj = {};
+    for (var i in data) {
       obj[template(i, config)] = template(data[i], config);
     }
     return obj;
   } else {
-    const response = mustache.render(data.toString(), config);
+    var response = mustache.render(data.toString(), config);
     if (response.length > 0) {
       return response;
     } else {
@@ -30,7 +30,7 @@ function exec(data, variables) {
   data.headers.Authorization = data.headers.Authorization || 'Bearer {{token}}';
 
   // Parse staches!
-  const args = template(data, variables);
+  var args = template(data, variables);
 
   if (typeof args !== 'string') {
     args.body = JSON.stringify(args.body);
@@ -54,12 +54,12 @@ module.exports = function make({resources, variables}) {
 
   // Traverse into a deeply-nested datastructure and convert leaf nodes into methods.
   function recurseThroughResources(resources, library) {
-    for (const resource in resources) {
+    for (var resource in resources) {
       if (resources[resource].method) { // If a request method was defined...
         // We're at a leaf, so create a function.
         library[resource] = function(args) {
           // Merge the global configuration and any args that were passed in.
-          const combinedArgs = Object.assign({}, configuration, args);
+          var combinedArgs = Object.assign({}, configuration, args);
           // Make the query.
           return exec(resources[resource], combinedArgs);
         };
@@ -75,11 +75,11 @@ module.exports = function make({resources, variables}) {
     return library;
   }
 
-  const library = {
+  var library = {
     // A predefined function to adjust the configuration.
     config(config) {
       if (config) {
-        for (const key in config) {
+        for (var key in config) {
           configuration[key] = config[key];
         }
       } else {
