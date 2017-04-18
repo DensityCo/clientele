@@ -127,7 +127,7 @@ print(response)
 or:
 
 ```ruby
-Api = Clientelle.new({ "resources": {...}, "variables": {} })
+Api = Clientele.new({ "resources": {...}, "variables": {} })
 response = Api::SomeThing::AnotherThing.get(:id => 1)
 puts response
 ```
