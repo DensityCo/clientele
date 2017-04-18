@@ -37,7 +37,7 @@ function exec(data, variables) {
   }
 
   // Make the request.
-  return fetch([args.url, qs.stringify(args.qs || {})].join('?'), args).then(resp => {
+  return fetch([args.url, qs.stringify(args.qs || {})].join('?'), args).then(function (resp) {
     if (resp.status >= 200 && resp.status < 300) {
       return resp.json();
     } else {
