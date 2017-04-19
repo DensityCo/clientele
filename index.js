@@ -56,13 +56,15 @@ module.exports = function make(options) {
   function recurseThroughResources(resources, library) {
     for (var resource in resources) {
       if (resources[resource].method) { // If a request method was defined...
-        // We're at a leaf, so create a function.
-        library[resource] = function(args) {
-          // Merge the global configuration and any args that were passed in.
-          var combinedArgs = Object.assign({}, configuration, args);
-          // Make the query.
-          return exec(resources[resource], combinedArgs);
-        };
+        (function(resource) {
+          // We're at a leaf, so create a function.
+          library[resource] = function(args) {
+            // Merge the global configuration and any args that were passed in.
+            var combinedArgs = Object.assign({}, configuration, args);
+            // Make the query.
+            return exec(resources[resource], combinedArgs);
+          };
+        })(resource);
 
         // Add the description to the fucntion. FIXME: is this weird?
         library[resource].source = resources[resource];
