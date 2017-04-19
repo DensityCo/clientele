@@ -64,10 +64,10 @@ module.exports = function make(options) {
             // Make the query.
             return exec(resources[resource], combinedArgs);
           };
-        })(resource);
 
-        // Add the description to the fucntion. FIXME: is this weird?
-        library[resource].source = resources[resource];
+          // Add the description to the fucntion. FIXME: is this weird?
+          library[resource].source = resources[resource];
+        })(resource);
       } else {
         // Just another node, decend further...
         library[resource] = recurseThroughResources(resources[resource], {});
@@ -78,6 +78,8 @@ module.exports = function make(options) {
   }
 
   var library = {
+    configuration,
+
     // A predefined function to adjust the configuration.
     config: function(config) {
       if (config) {
