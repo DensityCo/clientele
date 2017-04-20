@@ -78,7 +78,6 @@ module.exports = function make(options) {
   }
 
   var library = {
-    configuration,
 
     // A predefined function to adjust the configuration.
     config: function(config) {
