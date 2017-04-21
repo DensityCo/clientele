@@ -2,7 +2,7 @@
   "name": "@density/clientele",
   "version": "1.2.1",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {},
   "keywords": [],
   "author": "",
