@@ -38,7 +38,7 @@ function exec(data, variables) {
 
   // Assemble a url.
   let url = args.url;
-  if (Object.keys(args.qs).length > 0) {
+  if (args.qs && Object.keys(args.qs).length > 0) {
     url += `?${qs.stringify(args.qs || {})}`
   }
 
