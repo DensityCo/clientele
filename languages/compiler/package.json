@@ -1,0 +1,13 @@
+{
+  "name": "@density/clientele-compiler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "clientele-compiler": "index.js"
+  },
+  "scripts": {},
+  "keywords": [],
+  "author": "Density <team+javascript@density.io>",
+  "license": "MIT"
+}
