@@ -1,11 +1,24 @@
 from main import ClienteleApi
 import json
 
-with open("../../client-js/specs/core-api.json") as c, open("../../client-js/specs/accounts-api.json") as a:
-    core = ClienteleApi(**json.load(c))
-    core.config(token="ses_AXNP6aZhZlTa9NKEouUgmZWSEtsGE7S02GnLgntEzua")
+# Describe the api client:
+configuration = {
+    "variables": {},
+    "resources": {
+        "clientele": {
+            "users": {
+                "get": {
+                    "method": "GET",
+                    "url": "https://densityco.github.io/clientele/users/{{id}}"
+                },
+            },
+        },
+    },
+};
 
-    accounts = ClienteleApi(**json.load(a))
-    accounts.config(token="ses_AXNP6aZhZlTa9NKEouUgmZWSEtsGE7S02GnLgntEzua")
+# Create the api client:
+api = ClienteleApi(**configuration)
 
-    print accounts.resources
+# Now use it:
+response = api.clientele.users.get(id="1")
+print response.json()
