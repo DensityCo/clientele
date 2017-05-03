@@ -1,0 +1,7 @@
+{
+"id": 100,
+"name": "joe parker",
+"color": "blue",
+"email": "joe.parker@example.com",
+"picture": "https://randomuser.me/api/portraits/thumb/men/73.jpg"
+}
