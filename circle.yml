@@ -8,7 +8,7 @@ test:
   post:
     - |
       if [ "$CIRCLE_BRANCH" == "master" ]; then
-        echo "Trying to publish package, if it fails then this verison has already been published."
+        echo "Trying to publish package, if it fails then this version has already been published."
         cd languages/javascript && make publish
       else
         echo "Packages are only published to npm on branch 'master'."
