@@ -6,12 +6,12 @@ class NoSuchEndpointException(AttributeError): pass
 
 # Given a nested data structure with embedded mustache tags, replace all staches with their
 # contents in `config`
-def template(data, config):
+def destache(data, config):
     if type(data) is list:
-        return [template(i, config) for i in data]
+        return [destache(i, config) for i in data]
     elif type(data) is dict:
         return dict(
-            ((template(k, config), template(v, config)) for (k, v) in data.iteritems())
+            ((destache(k, config), destache(v, config)) for (k, v) in data.iteritems())
         )
     else:
         response = pystache.render(data, config)
@@ -29,7 +29,6 @@ class ClienteleResource(object):
         resource = self.resources.get(name)
 
         if type(resource) is dict and resource.get("method"):
-
             # "Leafs" are returned by value
             def route(**args):
                 return self.api_container.request(resource, args)
@@ -56,7 +55,7 @@ class ClienteleApi(ClienteleResource):
         args.update(configCopy)
 
         # replace mustaches in the resource with arguments
-        resource = template(resource, args)
+        resource = destache(resource, args)
 
         request_params = {
             "headers": resource.get("headers", {}),

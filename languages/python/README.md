@@ -1,7 +1,35 @@
 # Clientele Python
 
-This clientele wrapper will create a python api client given a clientele specification. Under the
-hood, it uses python's excellent `requests` module to query the server according to the spec and
-returns a `requests.Response` from each method.
+A python adapter for clientele.
 
-Check out [example.py](example.py) for a demo.
+```python
+# thing.py
+from clientele import ClienteleApi
+
+configuration = {
+    "resources": {
+        "users": {
+            "get": {
+                "method": "GET",
+                "url": "{{{hostname}}}/users/{{id}}",
+            },
+        },
+    },
+    "variables": {
+        "hostname": "https://densityco.github.io/clientele",
+    },
+}
+
+Thing = ClienteleApi(**configuration)
+
+# example.py
+from example import Thing
+
+# If you'd like to override variables at runtime, you can with `config`:
+Thing.config(
+  hostname="https://densityco.github.io/clientele",
+)
+
+# Use it.
+print Thing.users.get(id=1)
+```
