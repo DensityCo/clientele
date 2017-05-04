@@ -28,6 +28,10 @@ class ClienteleApi < ClienteleResource
     @variables = configuration[:variables]
   end
 
+  def configure
+    yield(@variables)
+  end
+
   def destache(value, params)
     if value.is_a? Hash
       output = {}
