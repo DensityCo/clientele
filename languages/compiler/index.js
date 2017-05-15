@@ -24,14 +24,14 @@ function generateOperationsForConfig(resources, lastKey=null) {
     if (!resources[key]) { continue; }
     if (resources[key].method) {
       operations.unshift([
-        generators.generateMethod,
+        generator.generateMethod,
         key,               // The name of the the leaf to create
         resources[key],    // The data in that key
         lastKey,           // The "level above"'s key.
       ]);
     } else {
       operations.unshift([
-        generators.generateLevel,
+        generator.generateLevel,
         key,                                          // The name of the node to create.
         Object.keys(resources[key]),                  // An array of nodes / leafs within this node.
         Object.keys(resources[key]).map(i =>          // An array that indicates if an element is a leaf or node.
@@ -43,20 +43,20 @@ function generateOperationsForConfig(resources, lastKey=null) {
 }
 
 module.exports = function compile({resources, variables}, topLevelIdentifier="root") {
-  output.write(`${generators.generateRequestHandler()}\n`);
+  output.write(`${generator.generateRequestHandler()}\n`);
 
   generateOperationsForConfig(configuration.resources);
   operations.forEach(([action, ...args]) => output.write(`${action(...args)}\n`));
 
   // Generate the top level node.
-  output.write(`${generators.generateLevel(
+  output.write(`${generator.generateLevel(
     topLevelIdentifier,
     Object.keys(configuration.resources),
     Object.keys(configuration.resources).map(i => i.method ? 'leaf' : 'node')
   )}\n`);
 
   // Export the top level node.
-  output.write(`${generators.generatePublicExport(topLevelIdentifier)}\n`);
+  output.write(`${generator.generatePublicExport(topLevelIdentifier)}\n`);
 }
 
 
