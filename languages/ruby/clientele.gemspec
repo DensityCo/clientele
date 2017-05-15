@@ -8,6 +8,8 @@ Gem::Specification.new do |spec|
   spec.email       = "team+ruby@density.io"
   spec.files       = `git ls-files`.split($/)
 
+  spec.add_dependency 'httparty', '~> 0.15.2'
+  spec.add_dependency 'mustache', '~> 1.0.5'
   spec.add_development_dependency 'bundler', '~> 1.3'
   spec.add_development_dependency 'rake'
 end
