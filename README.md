@@ -6,9 +6,9 @@ clientele aims to exchange this with a tidy configuration file passed to the
 package on start.
 
 ## Language Support
-- [JavaScript](javascript/) (no Node support, as `fetch` is required)
-- [Python](python/)
-- [Ruby](ruby/)
+- [JavaScript](/javascript/) (no Node support, as `fetch` is required)
+- [Python](/python/)
+- [Ruby](/ruby/)
 - (Coming Soon)
     - Swift
     - Golang
