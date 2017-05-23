@@ -5,6 +5,7 @@ creating an api client in any language requires lots of boilerplate --
 clientele aims to exchange this with a tidy configuration file passed to the
 package on start.
 
+[![CircleCI](https://circleci.com/gh/DensityCo/clientele.svg?style=svg)](https://circleci.com/gh/DensityCo/clientele)
 [![Dependency Status](https://david-dm.org/density/clientele.svg)](https://david-dm.org/density/clientele)
 [![Package Version](https://img.shields.io/npm/v/@density/clientele.svg)](https://npmjs.com/@density/clientele)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
