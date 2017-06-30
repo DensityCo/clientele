@@ -44,8 +44,10 @@ function exec(data, variables) {
 
   // Make the request.
   return fetch(url, args).then(function (resp) {
-    if (resp.status >= 200 && resp.status < 300) {
+    if (resp.status >= 200 && resp.status < 300 && resp.status !== 204) {
       return resp.json();
+    } else if (resp.status === 204) {
+      return null; // a 204 has no body.
     } else {
       throw new Error(`Error ${resp.status} ${resp.statusText}: ${args.url} ${JSON.stringify(resp.body)}`);
     }
