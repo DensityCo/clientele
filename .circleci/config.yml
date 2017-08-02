@@ -1,0 +1,22 @@
+version: 2
+
+jobs:
+  build:
+    steps:
+      - checkout
+      - run:
+          name: "Install js dependencies"
+          command: cd languages/javascript && npm install
+      - run:
+          name: "Install python dependencies"
+          command: cd languages/python && pip install -r requirements.txt
+      - run:
+          name: "Publish npm package"
+          command: |
+            if [ "$CIRCLE_BRANCH" == "master" ]; then
+              echo "Trying to publish package, if it fails then this verison has already been published."
+              npm publish .
+            else
+              echo "Packages are only published to npm on branch 'master'."
+            fi
+            exit 0
