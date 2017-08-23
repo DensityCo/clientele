@@ -58,7 +58,7 @@ function exec(data, variables, options) {
       // throw. Wrap in `Promise.all` so that even if the function doesn't return a promise, it'll
       // act like it did.
       if (options.errorFormatter) {
-        return Promise.all([options.errorFormatter(resp)]).then(([error]) => Promise.rejet(error));
+        return Promise.all([options.errorFormatter(resp)]).then(([error]) => Promise.reject(error));
       } else {
         // Reject the response on error
         return Promise.reject(resp);
