@@ -8,6 +8,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: "Add npm token to npmrc"
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+      - run:
           name: "Install js dependencies"
           command: cd languages/javascript && npm install
       # - run:
@@ -19,7 +22,7 @@ jobs:
             if [ "$CIRCLE_BRANCH" == "master" ]; then
               echo "Trying to publish package, if it fails then this verison has already been published."
               set +e
-              npm publish .
+              cd languages/javascript && npm publish .
               set -e
             else
               echo "Packages are only published to npm on branch 'master'."
