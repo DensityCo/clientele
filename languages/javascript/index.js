@@ -44,20 +44,17 @@ function exec(data, variables) {
 
   // Make the request.
   return fetch(url, args).then(function (resp) {
-    if (resp.status >= 200 && resp.status < 300) {
+    if (resp.ok) {
       // Make a clone of the response so that the body can be parsed twice if required.
       const respClone = resp.clone();
 
       // Try to parse the body as json, but if that fails, fall back to plain text.
-      return respClone.json().then(json => {
-        delete respClone;
-        return json;
-      }).catch(err => {
-        delete respClone;
+      return respClone.json().catch(() => {
         return resp.text();
       });
     } else {
-      throw new Error(`Error ${resp.status} ${resp.statusText}: ${args.url} ${JSON.stringify(resp.body)}`);
+      // Reject the response on error
+      return Promise.reject(resp);
     }
   });
 }
