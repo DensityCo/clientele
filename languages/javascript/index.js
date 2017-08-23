@@ -24,7 +24,7 @@ function template(data, config) {
 
 // This function is called when a api call is to be made. It's passed data from the node and any
 // configuration variables that apply to the function call.
-function exec(data, variables) {
+function exec(data, variables, options) {
   // Set Authorization header by default
   data.headers = data.headers || {};
   data.headers.Authorization = data.headers.Authorization || 'Bearer {{token}}';
@@ -53,8 +53,16 @@ function exec(data, variables) {
         return resp.text();
       });
     } else {
-      // Reject the response on error
-      return Promise.reject(resp);
+
+      // If an error formatting function was specified, pass the response in to get the error to
+      // throw. Wrap in `Promise.all` so that even if the function doesn't return a promise, it'll
+      // act like it did.
+      if (options.errorFormatter) {
+        return Promise.all([options.errorFormatter(resp)]).then(([error]) => Promise.rejet(error));
+      } else {
+        // Reject the response on error
+        return Promise.reject(resp);
+      }
     }
   });
 }
@@ -75,7 +83,7 @@ module.exports = function make(options) {
             // Merge the global configuration and any args that were passed in.
             const combinedArgs = Object.assign({}, configuration, args);
             // Make the query.
-            return exec(resources[resource], combinedArgs);
+            return exec(resources[resource], combinedArgs, options);
           };
 
           // Add the description to the fucntion. FIXME: is this weird?

@@ -117,6 +117,36 @@ api.foo.bar.get({id: '1'}).then(data => {
 });
 ```
 
+### Error formatting
+Clientele allows the user to pass in an `errorFormatter` argument that can preprocess a request
+error before it is raised as an error in a specific call:
+
+```javascript
+const configuration = {
+  variables: {
+    host: 'https://densityco.github.io/clientele',
+  },
+  errorFormatter: response => response.text(), // Raise the body contents as text.
+  resources: {
+    users: {
+      get: {
+        method: 'GET',
+        url: '{{{host}}}/posts/{{id}}',
+      },
+    },
+  },
+};
+
+// Create the api client.
+const api = clientele(configuration);
+
+// Pretend this call raises an error. The error will be the body contents as text.
+api.foo.bar.get({id: '1'}).catch(err => {
+  // err is the body contents as text.
+});
+```
+
+
 ### Tokens
 The variable `token` is special. If set (and it isn't overriden in a resource),
 then the header `Authentication: Bearer {{token}}` is added to the request.
