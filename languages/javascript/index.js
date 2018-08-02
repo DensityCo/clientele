@@ -14,10 +14,14 @@ function template(data, config) {
     return obj;
   } else {
     const response = mustache.render(data.toString(), config);
-    if (response.length > 0) {
-      return response;
-    } else {
+    if (!isNaN(parseFloat(response, 10))) { /* float values */
+      return parseFloat(response, 10);
+    } else if (!isNaN(parseInt(response, 10))) { /* int values */
+      return parseInt(response, 10);
+    } else if (response.length === 0) { /* empty values */
       return undefined;
+    } else {
+      return response;
     }
   }
 }
