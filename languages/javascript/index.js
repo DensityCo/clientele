@@ -14,9 +14,9 @@ function template(data, config) {
     return obj;
   } else {
     const response = mustache.render(data.toString(), config);
-    if (!isNaN(parseFloat(response, 10))) { /* float values */
+    if (/^[-+]?(?:\d*\.?\d+|\d+\.?\d*)(?:[eE][-+]?\d+)?$/.test(response)) { /* float values */
       return parseFloat(response, 10);
-    } else if (!isNaN(parseInt(response, 10))) { /* int values */
+    } else if (/^-?[0-9]+$/.test(response)) { /* int values */
       return parseInt(response, 10);
     } else if (response.length === 0) { /* empty values */
       return undefined;
