@@ -146,6 +146,26 @@ api.foo.bar.get({id: '1'}).catch(err => {
 });
 ```
 
+### Raw parameters
+Clientele permits passing a `raw` key in any request to add custom, non-templated keys to the
+parameters passed to fetch. One example as to where this would come in handy is to permit cancelling
+a request:
+```
+// Create an abort controller
+const controller = new AbortController();
+
+// Pass the abort controller to the underlying fetch call using `raw`
+api.users.get({
+  id: '1',
+  raw: { signal: controller.signal },
+}).then(data => {
+  console.log(data);
+});
+
+// Cancel the fetch call
+controller.abort();
+```
+
 
 ### Tokens
 The variable `token` is special. If set (and it isn't overriden in a resource),

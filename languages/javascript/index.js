@@ -46,6 +46,13 @@ function exec(data, variables, options) {
     url += `?${qs.stringify(args.qs || {})}`
   }
 
+  // Inject any untemplated attributes into the fetch call.
+  if (variables.raw) {
+    for (const key in variables.raw) {
+      args[key] = variables.raw[key];
+    }
+  }
+
   // Make the request.
   return fetch(url, args).then(function (resp) {
     if (resp.ok) {
